@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct RawParams<T> where T : unmanaged
+namespace Ces.Collections
 {
-    public RawParamsFlag Flag;
+    public struct RawParams<T> where T : unmanaged
+    {
+        public RawParamsFlag Flag;
 
-    public T ValueDefault;
-}
+        public T ValueDefault;
+    }
 
-public enum RawParamsFlag : uint
-{
-    None = 0,
+    public enum RawParamsFlag : uint
+    {
+        None = 0,
 
-    ClearMemory = 1u << 0,
-    SetValueDefault = 1u << 1,
-
-
+        ClearMemory = 1u << 0,
+        SetValueDefault = 1u << 1,
+    }
 }
