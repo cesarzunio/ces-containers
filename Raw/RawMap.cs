@@ -38,8 +38,7 @@ namespace Ces.Collections
             if (allocator == Allocator.None)
                 return;
 
-            capacity = math.max(capacity, CAPACITY_MIN);
-            capacity = CesCollectionsUtility.CapacityInitialAligned(CAPACITY_MIN, capacity);
+            capacity = CesCollectionsUtility.CapacityInitialAligned(capacity, CAPACITY_MIN);
 
             SetCapacity(capacity);
         }

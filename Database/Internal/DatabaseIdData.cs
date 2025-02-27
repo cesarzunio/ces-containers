@@ -36,15 +36,15 @@ namespace Ces.Collections
             if (capacity < 0)
                 throw new Exception($"DatabaseIdData :: Capacity ({capacity}) must be positive!");
 
-            int capacityInitialAligned = CesCollectionsUtility.CapacityInitialAligned(CAPACITY_MIN, capacity);
+            capacity = CesCollectionsUtility.CapacityInitialAligned(capacity, CAPACITY_MIN);
 
             StackCount = 0;
-            Capacity = capacityInitialAligned;
+            Capacity = capacity;
             _allocator = allocator;
 
-            IdToIndex = CesMemoryUtility.AllocateCacheDefault(capacityInitialAligned, _allocator, DatabaseIndex.Invalid);
-            IdToUseCount = CesMemoryUtility.AllocateCacheDefault(capacityInitialAligned, _allocator, 0u);
-            IdStack = CesMemoryUtility.AllocateCache<DatabaseId>(capacityInitialAligned, _allocator);
+            IdToIndex = CesMemoryUtility.AllocateCacheDefault(capacity, _allocator, DatabaseIndex.Invalid);
+            IdToUseCount = CesMemoryUtility.AllocateCacheDefault(capacity, _allocator, 0u);
+            IdStack = CesMemoryUtility.AllocateCache<DatabaseId>(capacity, _allocator);
 
             if (initializeFully)
             {
@@ -63,6 +63,7 @@ namespace Ces.Collections
             CesMemoryUtility.FreeAndNullify(ref IdStack, _allocator);
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public void IncreaseCapacity()
         {
             int capacity = CesCollectionsUtility.CapacityUp(Capacity);
@@ -100,6 +101,7 @@ namespace Ces.Collections
             FillIdStack(0, Capacity - 1);
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         void FillIdStack(int fromInclusive, int toInclusive)
         {
 #if CES_COLLECTIONS_CHECK

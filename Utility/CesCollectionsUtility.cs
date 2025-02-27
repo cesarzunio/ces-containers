@@ -38,20 +38,16 @@ namespace Ces.Collections
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int CapacityUp(int capacityCurrent)
         {
-            return (int)math.ceil(capacityCurrent * 1.5f);
+            return capacityCurrent * 2;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static int CapacityInitialAligned(int capacityMin, int capacityRequested)
+        public static int CapacityInitialAligned(int capacityRequested, int capacityMin)
         {
-            int capacityCurrent = capacityMin;
-
-            while (capacityCurrent < capacityRequested)
-            {
-                capacityCurrent = CapacityUp(capacityCurrent);
-            }
-
-            return capacityCurrent;
+            capacityRequested = math.max(capacityRequested, capacityMin);
+            capacityRequested = math.ceilpow2(capacityRequested);
+        
+            return capacityRequested;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

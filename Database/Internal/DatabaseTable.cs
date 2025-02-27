@@ -30,16 +30,16 @@ namespace Ces.Collections
             if (count < 0)
                 throw new Exception($"DatabaseTable :: Count ({count}) is negative!");
 
-            int capacityInitialAligned = CesCollectionsUtility.CapacityInitialAligned(CAPACITY_MIN, count);
+            int capacity = CesCollectionsUtility.CapacityInitialAligned(count, CAPACITY_MIN);
 
             Count = count;
-            Capacity = capacityInitialAligned;
+            Capacity = capacity;
             _allocator = allocator;
 
             Columns = default;
-            Columns.Allocate(_allocator, capacityInitialAligned);
+            Columns.Allocate(_allocator, capacity);
 
-            IndexToId = CesMemoryUtility.AllocateCacheDefault(capacityInitialAligned, _allocator, DatabaseId.Invalid);
+            IndexToId = CesMemoryUtility.AllocateCacheDefault(capacity, _allocator, DatabaseId.Invalid);
         }
 
 //        /// <summary>
